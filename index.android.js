@@ -8,22 +8,35 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  Dimensions,
+  PixelRatio,
+  ScrollView
 } from 'react-native';
+
+import { observer } from 'mobx';
 
 class RNELD extends Component {
   render() {
+    const fonts = [12, 14, 16, 18, 20, 22, 24, 28, 32, 45];
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
-        </Text>
+
+
+      <Text>{JSON.stringify(Dimensions.get('window'))}</Text>
+      {fonts.map((x, i) => {
+          return <View key={x}>
+          <View style={{width: x, height: x, backgroundColor: 'red'}}/>
+          <Text style={{fontSize: x, fontFamily: 'roboto'}}>{x} quick brown foxes JUMP OVER</Text>
+          <View style={{ backgroundColor:'#3498db', padding: 8, borderRadius: 2, alignItems: 'center' }}>
+
+          <Text style={{fontSize: x, fontFamily: 'roboto', color: 'white', fontWeight:'bold', padding: 0, margin: 0}}>{x} CONFIRM</Text>
+
+          </View>
+          </View>;
+      })}
+
+
       </View>
     );
   }
