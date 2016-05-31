@@ -18,13 +18,27 @@ import { observer } from 'mobx';
 
 class RNELD extends Component {
   render() {
-    const fonts = [12, 14, 16, 18, 20, 22, 24, 28, 32, 45];
+      const fonts = [
+          { type: 'Body1', size: 20 },
+          { type: 'BUTTON', size: 22 },
+          { type: 'Caption', size: 16 },
+          { type: 'Subhead', size: 24 },
+          { type: 'Title', size: 28 },
+          { type: 'Headline', size: 34 },
+          { type: 'Large', size: 26 },
+          { type: 'Medium', size: 22 },
+          { type: 'Small', size: 18 },
+          { type: 'Menu', size: 22 },
+      ];
     return (
       <View style={styles.container}>
 
 
       <Text>{JSON.stringify(Dimensions.get('window'))}</Text>
-      {fonts.map((x, i) => {
+      {fonts.map(({type, size}, i) => {
+          return <Text style={{fontSize: size, fontFamily: 'roboto'}} key={i}>{type}</Text>
+      })}
+      {/*fonts.map((x, i) => {
           return <View key={x}>
           <View style={{width: x, height: x, backgroundColor: 'red'}}/>
           <Text style={{fontSize: x, fontFamily: 'roboto'}}>{x} quick brown foxes JUMP OVER</Text>
@@ -34,7 +48,7 @@ class RNELD extends Component {
 
           </View>
           </View>;
-      })}
+      })*/}
 
 
       </View>
