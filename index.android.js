@@ -14,9 +14,33 @@ import {
   ScrollView
 } from 'react-native';
 
-import { observer } from 'mobx';
+import { uistore } from './src/store/ui';
+import { observer } from 'mobx-react/native';
 
+class Button extends Component {
+  render() {
+    const {text, fontSize=14} = this.props;
+    return <View style={[{padding: 8, margin: 8, backgroundColor: '#3d98d3', borderRadius: 2}, this.state]} onLayout={({nativeEvent: {layout: {width}}}) => this.setState({width: Math.max(64, width)})}>
+      <Text style={{textAlign: 'center', fontFamily: 'roboto', fontSize, fontWeight: 'bold', color: 'white'}}>{text.toUpperCase()}</Text>
+    </View>
+  }
+}
+// const Button = ({text}) => {
+//   return <View style={{padding: 8, margin: 8, minWidth: 64, backgroundColor: '#3d98d3'}}>
+//     <Text style={{fontFamily: 'roboto', fontSize: 14, fontWeight: 'bold', color: 'white'}}>{text.toUpperCase()}</Text>
+//   </View>
+// };
+
+@observer
 class RNELD extends Component {
+  componentDidMount() {
+    uistore.componentDidMount();
+  }
+
+  componentWillUnmount() {
+    uistore.componentWillUnmount();
+  }
+
   render() {
       const fonts = [
           { type: 'Body1', size: 20 },
@@ -31,13 +55,18 @@ class RNELD extends Component {
           { type: 'Menu', size: 22 },
       ];
     return (
-      <View style={styles.container}>
+      <View style={styles.container} onLayout={e => uistore.layout.onLayout(e)}>
 
-
-      <Text>{JSON.stringify(Dimensions.get('window'))}</Text>
+      <Text>{JSON.stringify(uistore.layout)} {JSON.stringify(uistore.layout.isPortrait)} {JSON.stringify(uistore.connectionInfo)}</Text>
       {fonts.map(({type, size}, i) => {
-          return <Text style={{fontSize: size, fontFamily: 'roboto'}} key={i}>{type}</Text>
+        return <Text style={{fontSize: size, fontFamily: 'roboto'}} key={i}>{type}</Text>
       })}
+
+      <Button text="standard button" />
+      <Button text="ok" />
+      <Button text="min" />
+      <Button text="22dp button" fontSize={22} />
+      <View style={{height:4, width: 64, backgroundColor: 'red'}}/>
       {/*fonts.map((x, i) => {
           return <View key={x}>
           <View style={{width: x, height: x, backgroundColor: 'red'}}/>
